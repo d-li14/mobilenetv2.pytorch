@@ -18,7 +18,7 @@ tensorboardX  1.2
 ```
 
 # Pretrained models
-[Our pretrained model](https://github.com/d-li14/mobilenetv2.pytorch/blob/master/pretrained/mobilenetv2-36f4e720.pth) achieves **72.192% top-1 accuracy** and 90.534% top-5 accuracy on ImageNet validation set, which is higher than the statistics reported in the original paper and official [TensorFlow implementation](https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet).
+[Our pretrained model](https://github.com/d-li14/mobilenetv2.pytorch/blob/master/pretrained/mobilenetv2-0c6065bc.pth) achieves **72.192% top-1 accuracy** and 90.534% top-5 accuracy on ImageNet validation set, which is higher than the statistics reported in the original paper and official [TensorFlow implementation](https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet).
 
 Pretrained model can be easily imported using the following lines and then finetuned for other vision tasks or utilized in resource-limited platforms.
 ```python
