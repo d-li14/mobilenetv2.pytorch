@@ -7,15 +7,6 @@ This implementation provides an example procedure of training and validating any
 ## Dataset
 Download the ImageNet dataset and move validation images to labeled subfolders.
 To do this, you can use the following script: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
-## Libraries
-```
-NumPy         1.15.0
-matplotlib    2.2.3
-PyTorch       0.4.1
-torchvision   0.2.1
-tensorbord    1.9.0
-tensorboardX  1.2
-```
 
 # Pretrained models
 [Our pretrained model](https://github.com/d-li14/mobilenetv2.pytorch/blob/master/pretrained/mobilenetv2-0c6065bc.pth) achieves **72.192% top-1 accuracy** and 90.534% top-5 accuracy on ImageNet validation set, which is higher than the statistics reported in the original paper and official [TensorFlow implementation](https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet).
@@ -25,7 +16,7 @@ Pretrained model can be easily imported using the following lines and then finet
 from models.imagenet import mobilenetv2
 
 net = mobilenetv2()
-net.load_state_dict(torch.load('pretrained/mobilenetv2-36f4e720.pth'))
+net.load_state_dict(torch.load('pretrained/mobilenetv2-0c6065bc.pth'))
 ```
 
 # Citations
