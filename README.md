@@ -2,7 +2,7 @@
 <h2>
 
 ```diff
-+ Release of next generation of MobileNets in mobilenetv3.pytorch
++ Release of next generation of MobileNet in my repo *mobilenetv3.pytorch*
 ```
 
 </h2>
