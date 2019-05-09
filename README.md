@@ -1,3 +1,4 @@
+## Release of the next generation of MobileNets in [mobilenetv3.pytorch](https://github.com/d-li14/mobilenetv3.pytorch)
 # PyTorch Implemention of MobileNet V2
 Reproduction of MobileNet V2 architecture as described in [MobileNetV2: Inverted Residuals and Linear Bottlenecks](https://arxiv.org/abs/1801.04381) by Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov and Liang-Chieh Chen on ILSVRC2012 benchmark with [PyTorch](pytorch.org) framework. Adapted from [pytorch-classification](https://github.com/bearpaw/pytorch-classification) and [pytorch-mobilenet-v2](https://github.com/tonylins/pytorch-mobilenet-v2).
 
