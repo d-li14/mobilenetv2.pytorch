@@ -81,6 +81,8 @@ parser.add_argument('-c', '--checkpoint', default='checkpoints', type=str, metav
                     help='path to save checkpoint (default: checkpoints)')
 parser.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
+parser.add_argument('--weightfile', default='', type=str, metavar='PATH',
+                    help='path to weightfile for loading (default: none)')
 # Architecture
 parser.add_argument('--cardinality', type=int, default=32, help='ResNeXt model cardinality (group).')
 parser.add_argument('--base-width', type=int, default=4, help='ResNeXt model base width.')
@@ -97,6 +99,10 @@ parser.add_argument('--dist-url', default='tcp://224.66.41.62:23456', type=str,
                     help='url used to set up distributed training')
 parser.add_argument('--dist-backend', default='gloo', type=str,
                     help='distributed backend')
+parser.add_argument('--input_size', default=224, type=int,
+                    help='input resolution')
+parser.add_argument('--width_mult', default=1.0, type=float,
+                    help='width multiplier')
 # Device options
 parser.add_argument('--gpu-id', default='0', type=str,
                     help='id(s) for CUDA_VISIBLE_DEVICES')
@@ -141,7 +147,8 @@ def main():
                 )
     else:
         print("=> creating model '{}'".format(args.arch))
-        model = models.__dict__[args.arch]()
+        model = models.__dict__[args.arch](input_size=args.input_size,
+                                           width_mult=args.width_mult)
 
     if not args.distributed:
         if args.arch.startswith('alexnet') or args.arch.startswith('vgg'):
@@ -183,6 +190,17 @@ def main():
         logger = Logger(os.path.join(args.checkpoint, 'log.txt'), title=title)
         logger.set_names(['Learning Rate', 'Train Loss', 'Valid Loss', 'Train Acc.', 'Valid Acc.'])
 
+    if args.weightfile:
+        from collections import OrderedDict
+        if os.path.isfile(args.weightfile):
+            print("=> loading weightfile '{}'".format(args.weightfile))
+            preloaded_params = torch.load(args.weightfile)
+            new_state_dict = OrderedDict()
+            for k, v in preloaded_params.items():
+                if k[7:] != 'module.':
+                    k = 'module.' + k
+                new_state_dict[k] = v
+            model.load_state_dict(new_state_dict)
 
     cudnn.benchmark = True
 
@@ -195,7 +213,7 @@ def main():
     train_dataset = datasets.ImageFolder(
         traindir,
         transforms.Compose([
-            transforms.RandomResizedCrop(224),
+            transforms.RandomResizedCrop(args.input_size),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
             normalize,
@@ -212,8 +230,8 @@ def main():
 
     val_loader = torch.utils.data.DataLoader(
         datasets.ImageFolder(valdir, transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
+            transforms.Resize(int(256.0*(args.input_size/224.0))),
+            transforms.CenterCrop(args.input_size),
             transforms.ToTensor(),
             normalize,
         ])),
