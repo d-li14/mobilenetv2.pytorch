@@ -19,6 +19,34 @@ To do this, you can use the following script: https://raw.githubusercontent.com/
 # Pretrained models
 The pretrained MobileNetV2 1.0 achieves **72.192% top-1 accuracy** and 90.534% top-5 accuracy on ImageNet validation set, which is higher than the statistics reported in the original paper and official [TensorFlow implementation](https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet).
 
+The command below shows an example which loads and evaluates the half-width MobileNetV2 pretrained model:
+```
+python imagenet.py \
+	-d ~/path/to/ILSVRC2012/ -j16 -e \
+	--weightfile pretrained/mobilenetv2_0.5-eaa6f9ad.pth \
+	--arch="mobilenetv2" \
+	--gpu-id="0,1,2,3" \
+	--width_mult 0.5 \
+	--input_size 224
+```
+
+# Training
+
+The command below trains a 1.0 width MobileNetV2 model with an input resolution of 224 from scratch:
+```
+python imagenet.py \
+	-d ~/path/to/ILSVRC2012/ -j16 \
+	--arch="mobilenetv2" \
+	--gpu-id="0,1,2,3" \
+	--epochs=300 \
+	--lr=0.045 \
+	--lr-decay="linear2exp" \
+	--gamma=0.98 \
+	--weight-decay=0.00004
+	--width_mult 1.0 \
+	--input_size 224 \
+```
+
 ### MobileNetV2 with a spectrum of width multipliers
 | Architecture      | # Parameters | MFLOPs | Top-1 / Top-5 Accuracy (%) |
 | ----------------- | ------------ | ------ | -------------------------- |
