@@ -197,7 +197,7 @@ def main():
             preloaded_params = torch.load(args.weightfile)
             new_state_dict = OrderedDict()
             for k, v in preloaded_params.items():
-                if k[7:] != 'module.':
+                if k[:7] != 'module.':
                     k = 'module.' + k
                 new_state_dict[k] = v
             model.load_state_dict(new_state_dict)
