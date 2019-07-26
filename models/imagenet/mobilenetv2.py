@@ -89,7 +89,7 @@ class InvertedResidual(nn.Module):
 
 
 class MobileNetV2(nn.Module):
-    def __init__(self, num_classes=1000, input_size=224, width_mult=1.):
+    def __init__(self, num_classes=1000, width_mult=1.):
         super(MobileNetV2, self).__init__()
         # setting of inverted residual blocks
         self.cfgs = [
@@ -104,23 +104,20 @@ class MobileNetV2(nn.Module):
         ]
 
         # building first layer
-        assert input_size % 32 == 0
-        input_channel = _make_divisible(32 * width_mult, 8)
+        input_channel = _make_divisible(32 * width_mult, 4 if width_mult == 0.1 else 8)
         layers = [conv_3x3_bn(3, input_channel, 2)]
         # building inverted residual blocks
         block = InvertedResidual
         for t, c, n, s in self.cfgs:
-            output_channel = _make_divisible(c * width_mult, 8)
-            layers.append(block(input_channel, output_channel, s, t))
-            input_channel = output_channel
-            for i in range(1, n):
-                layers.append(block(input_channel, output_channel, 1, t))
+            output_channel = _make_divisible(c * width_mult, 4 if width_mult == 0.1 else 8)
+            for i in range(n):
+                layers.append(block(input_channel, output_channel, s if i == 0 else 1, t))
                 input_channel = output_channel
         self.features = nn.Sequential(*layers)
         # building last several layers
-        output_channel = _make_divisible(1280 * width_mult, 8) if width_mult > 1.0 else 1280
+        output_channel = _make_divisible(1280 * width_mult, 4 if width_mult == 0.1 else 8) if width_mult > 1.0 else 1280
         self.conv = conv_1x1_bn(input_channel, output_channel)
-        self.avgpool = nn.AvgPool2d(input_size // 32, stride=1)
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.classifier = nn.Linear(output_channel, num_classes)
 
         self._initialize_weights()
@@ -144,7 +141,6 @@ class MobileNetV2(nn.Module):
                 m.weight.data.fill_(1)
                 m.bias.data.zero_()
             elif isinstance(m, nn.Linear):
-                n = m.weight.size(1)
                 m.weight.data.normal_(0, 0.01)
                 m.bias.data.zero_()
 
