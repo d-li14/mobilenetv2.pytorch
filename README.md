@@ -12,6 +12,9 @@ Reproduction of MobileNet V2 architecture as described in [MobileNetV2: Inverted
 This implementation provides an example procedure of training and validating any prevalent deep neural network architecture, with modular data processing, training, logging and visualization integrated.
 
 # Requirements
+## Dependencies
+* PyTorch 1.0+
+* [NVIDIA-DALI](https://github.com/NVIDIA/DALI) (in development, not recommended)
 ## Dataset
 Download the ImageNet dataset and move validation images to labeled subfolders.
 To do this, you can use the following script: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
@@ -47,6 +50,40 @@ from models.imagenet import mobilenetv2
 
 net = mobilenetv2()
 net.load_state_dict(torch.load('pretrained/mobilenetv2_1.0-0c6065bc.pth'))
+```
+
+# Usage
+## Training
+Configuration to reproduce our strong results efficiently, consuming around 2 days on 4x TiTan XP GPUs with [non-distributed DataParallel](https://pytorch.org/docs/master/nn.html#torch.nn.DataParallel) and [PyTorch dataloader](https://pytorch.org/docs/master/data.html#torch.utils.data.DataLoader).
+* *batch size* 256
+* *epoch* 300
+* *learning rate* 0.05
+* *LR decay strategy* cosine
+* *weight decay* 0.00004
+
+```shell
+python imagenet.py \
+    -a mobilenetv2 \
+    -d <path-to-ILSVRC2012-data> \
+    --epochs 150 \
+    --lr-decay cos \
+    --lr 0.05 \
+    --wd 4e-5 \
+    -c <path-to-save-checkpoints> \
+    --width-mult <width-multiplier> \
+    --input-size <input-resolution> \
+    -j <num-workers>
+```
+
+## Test
+```shell
+python imagenet.py \
+    -a mobilenetv2 \
+    -d <path-to-ILSVRC2012-data> \
+    --weight <pretrained-pth-file> \
+    --width-mult <width-multiplier> \
+    --input-size <input-resolution> \
+    -e
 ```
 
 # Citations
