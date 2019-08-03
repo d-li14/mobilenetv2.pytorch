@@ -3,6 +3,7 @@
 
 ```diff
 + Release of next generation of MobileNet in my repo *mobilenetv3.pytorch*
++ Release of advanced design of MobileNetV2 in my repo *HBONet*
 ```
 
 </h2>
@@ -31,8 +32,6 @@ The pretrained MobileNetV2 1.0 achieves **72.192% top-1 accuracy** and 90.534% t
 | [MobileNetV2 0.35](https://github.com/d-li14/mobilenetv2.pytorch/blob/master/pretrained/mobilenetv2_0.35-b2e15951.pth)  | 1.677M |     59.29 | 60.092 / 82.172  |
 | [MobileNetV2 0.25](https://github.com/d-li14/mobilenetv2.pytorch/blob/master/pretrained/mobilenetv2_0.25-b61d2159.pth)  | 1.519M |     37.21 | 52.352 / 75.932  |
 | [MobileNetV2 0.1](https://github.com/d-li14/mobilenetv2.pytorch/blob/master/pretrained/mobilenetv2_0.1-7d1d638a.pth)    | 1.356M | 12.92 | 34.896 / 56.564 |
-
-*Note: Channels of MobileNetV1 0.1 are set to be divisible by 4 while the default number is 8*
 
 ### MobileNetV2 1.0 with a spectrum of input resolutions
 | Architecture      | # Parameters | MFLOPs | Top-1 / Top-5 Accuracy (%) |
