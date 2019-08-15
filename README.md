@@ -3,7 +3,7 @@
 
 ```diff
 + Release of next generation of MobileNet in my repo *mobilenetv3.pytorch*
-+ Release of advanced design of MobileNetV2 in my repo *HBONet*
++ Release of advanced design of MobileNetV2 in my repo *HBONet* [ICCV 2019]
 ```
 
 </h2>
@@ -94,6 +94,16 @@ title = {MobileNetV2: Inverted Residuals and Linear Bottlenecks},
 booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
 month = {June},
 year = {2018}
+}
+```
+If you find this implementation helpful in your research, please also consider citing:
+```
+@InProceedings{Li_2019_ICCV,
+author = {Li, Duo and Zhou, Aojun and Yao, Anbang},
+title = {HBONet: Harmonious Bottleneck on Two Orthogonal Dimensions},
+booktitle = {The IEEE International Conference on Computer Vision (ICCV)},
+month = {Oct},
+year = {2019}
 }
 ```
 
