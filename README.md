@@ -55,7 +55,7 @@ net.load_state_dict(torch.load('pretrained/mobilenetv2_1.0-0c6065bc.pth'))
 ## Training
 Configuration to reproduce our strong results efficiently, consuming around 2 days on 4x TiTan XP GPUs with [non-distributed DataParallel](https://pytorch.org/docs/master/nn.html#torch.nn.DataParallel) and [PyTorch dataloader](https://pytorch.org/docs/master/data.html#torch.utils.data.DataLoader).
 * *batch size* 256
-* *epoch* 300
+* *epoch* 150
 * *learning rate* 0.05
 * *LR decay strategy* cosine
 * *weight decay* 0.00004
