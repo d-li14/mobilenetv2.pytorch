@@ -1,9 +1,11 @@
 # PyTorch Implemention of MobileNet V2
+
 <h2>
 
 ```diff
 + Release of next generation of MobileNet in my repo *mobilenetv3.pytorch*
 + Release of advanced design of MobileNetV2 in my repo *HBONet* [ICCV 2019]
++ Release of better pre-trained model. See below for details.
 ```
 
 </h2>
@@ -21,7 +23,7 @@ Download the ImageNet dataset and move validation images to labeled subfolders.
 To do this, you can use the following script: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
 
 # Pretrained models
-The pretrained MobileNetV2 1.0 achieves **72.192% top-1 accuracy** and 90.534% top-5 accuracy on ImageNet validation set, which is higher than the statistics reported in the original paper and official [TensorFlow implementation](https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet).
+The pretrained [MobileNetV2 1.0](https://github.com/d-li14/mobilenetv2.pytorch/blob/master/pretrained/mobilenetv2-c5e733a8.pth) achieves **72.834% top-1 accuracy** and 91.060% top-5 accuracy on ImageNet validation set, which is higher than the statistics reported in the original paper and official [TensorFlow implementation](https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet).
 
 ### MobileNetV2 with a spectrum of width multipliers
 | Architecture      | # Parameters | MFLOPs | Top-1 / Top-5 Accuracy (%) |
@@ -48,7 +50,7 @@ Taking MobileNetV2 1.0 as an example, pretrained models can be easily imported u
 from models.imagenet import mobilenetv2
 
 net = mobilenetv2()
-net.load_state_dict(torch.load('pretrained/mobilenetv2_1.0-0c6065bc.pth'))
+net.load_state_dict(torch.load('pretrained/mobilenetv2-c5e733a8.pth'))
 ```
 
 # Usage
@@ -59,6 +61,8 @@ Configuration to reproduce our strong results efficiently, consuming around 2 da
 * *learning rate* 0.05
 * *LR decay strategy* cosine
 * *weight decay* 0.00004
+
+The [newly released model](https://github.com/d-li14/mobilenetv2.pytorch/blob/master/pretrained/mobilenetv2-c5e733a8.pth) achieves even higher accuracy, with larger bacth size (1024) on 8 GPUs, higher initial learning rate (0.4) and longer training epochs (250). In addition, a dropout layer with the dropout rate of 0.2 is inserted before the final FC layer, no weight decay is imposed on BN layers and the learning rate ramps up from 0.1 to 0.4 in the first five training epochs.
 
 ```shell
 python imagenet.py \
