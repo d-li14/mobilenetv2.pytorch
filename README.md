@@ -62,7 +62,7 @@ Configuration to reproduce our strong results efficiently, consuming around 2 da
 * *LR decay strategy* cosine
 * *weight decay* 0.00004
 
-The [newly released model](https://github.com/d-li14/mobilenetv2.pytorch/blob/master/pretrained/mobilenetv2-c5e733a8.pth) achieves even higher accuracy, with larger bacth size (1024) on 8 GPUs, higher initial learning rate (0.4) and longer training epochs (250). In addition, a dropout layer with the dropout rate of 0.2 is inserted before the final FC layer, no weight decay is imposed on BN layers and the learning rate ramps up from 0.1 to 0.4 in the first five training epochs.
+The [newly released model](https://github.com/d-li14/mobilenetv2.pytorch/blob/master/pretrained/mobilenetv2-c5e733a8.pth) achieves even higher accuracy, with larger bacth size (1024) on 8 GPUs, higher initial learning rate (0.4) and longer training epochs (250). In addition, a dropout layer with the dropout rate of 0.2 is inserted before the final FC layer, no weight decay is imposed on biases and BN layers and the learning rate ramps up from 0.1 to 0.4 in the first five training epochs.
 
 ```shell
 python imagenet.py \
