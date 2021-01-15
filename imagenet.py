@@ -380,7 +380,7 @@ def adjust_learning_rate(optimizer, epoch, iteration, num_iter):
     max_iter = args.epochs * num_iter
 
     if args.lr_decay == 'step':
-        lr = args.lr * (args.gamma ** ((current_iter - warmup_iter) // (max_iter - warmup_iter)))
+        lr = args.lr * (args.gamma ** ((current_iter - warmup_iter) / (max_iter - warmup_iter)))
     elif args.lr_decay == 'cos':
         lr = args.lr * (1 + cos(pi * (current_iter - warmup_iter) / (max_iter - warmup_iter))) / 2
     elif args.lr_decay == 'linear':
